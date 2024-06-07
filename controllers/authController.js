@@ -8,9 +8,10 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     const userData = req.body;
 
-    await authService.register(userData);
+    const token = await authService.register(userData);
 
-    res.redirect('/auth/login');
+    res.cookie('auth', token);
+    res.redirect('/');
 })
 
 router.get('/login', (req, res) => {
