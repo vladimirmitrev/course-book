@@ -1,10 +1,16 @@
 const express = require('express');
 const routes = require('./routes');
+const handlebars = require('express-handlebars');
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
+
+app.engine('hbs', handlebars.engine({
+  extname: 'hbs'
+}));
+app.set('view engine', 'hbs');
 
 app.use(routes);
 
