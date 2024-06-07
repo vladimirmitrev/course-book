@@ -20,9 +20,16 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
 
-    await authService.login(email, password);
+    const token = await authService.login(email, password);
 
+    res.cookie('auth', token);
+    //ToDo Check where to redirect after login
     res.redirect('/');
   });
 
+router.get('/logout', (req, res) => {
+  res.clearCookie('auth');
+  
+  res.redirect('/');
+})
 module.exports = router;
