@@ -1,8 +1,6 @@
 <div class='details-container'>
   <div class='details-container-image'>
-    <img
-      src='{{image}}'
-    />
+    <img src='{{image}}' />
   </div>
   <div class='details-container-info'>
     <h2>Title: {{title}}</h2>
@@ -12,10 +10,10 @@
     <h3>By: {{owner.email}}</h3>
     <!--If there are sign up users-->
     {{#if singUpList}}
-    <h4>Signed By: {{signedUpUsers}}</h4>
+      <h4>Signed By: {{signedUpUsers}}</h4>
     {{else}}
-    <!--If there are no sign up users-->
-    <h4>Nobody has signed in for this course yet</h4>
+      <!--If there are no sign up users-->
+      <h4>Nobody has signed in for this course yet</h4>
     {{/if}}
   </div>
   <div class='details-container-content'>
@@ -23,12 +21,17 @@
   </div>
   <div class='btn-container'>
     <!-- Only for registered user and creator of the course-->
-    <a href='#'>Edit</a>
-    <a href='#'>Delete</a>
-    <!-- logged in user who has not yet sign up for the course-->
-    <a href='/courses/{{_id}}/sign-up'>Sign up</a>
-    <!-- logged in user who has already sign up for the course-->
-    <p class='sign-up'>You've already signed up for this course!</p>
-
+    {{#if isAuthenticated}}
+      {{#if isOwner}}
+        <a href='#'>Edit</a>
+        <a href='#'>Delete</a>
+      {{else if isSigned}}
+        <!-- logged in user who has already sign up for the course-->
+        <p class='sign-up'>You've already signed up for this course!</p>
+      {{else}}
+        <!-- logged in user who has not yet sign up for the course-->
+        <a href='/courses/{{_id}}/sign-up'>Sign up</a>
+      {{/if}}
+    {{/if}}
   </div>
 </div>

@@ -12,11 +12,14 @@ router.get('/', async (req, res) => {
 
 router.get('/:courseId/details', async (req, res) => {
     const courseId = req.params.courseId;
+    const userId = req.user?._id;
     try {
       const course = await courseService.getOneDetailed(courseId).lean();
       const signedUpUsers = course.singUpList.map(user => user.username).join(', ');
+      const isOwner = course.owner && course.owner._id == userId;
+      const isSigned = course.singUpList.some(user => user._id == userId);
 
-      res.render('courses/details', { ...course, signedUpUsers });
+      res.render('courses/details', { ...course, signedUpUsers, isOwner, isSigned });
     } catch (err) {
       // console.log(err);
       res.redirect('/');
