@@ -32,3 +32,5 @@ exports.singUp = async (courseId, userId) => {
     await course.save();
     await user.save();
 };
+
+exports.delete = (courseId) => Course.findByIdAndDelete(courseId);
