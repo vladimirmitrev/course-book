@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { isAuth } = require('../middlewares/authMiddleware');
+const { isCourseOwner } = require('../middlewares/courseMiddlewares');
+const Course = require('../models/Course');
 const courseService = require('../services/courseService');
 const { getErrorMessage } = require('../utils/errorUtils');
 
@@ -66,16 +68,25 @@ router.get('/:courseId/delete', isCourseOwner, async (req, res) => {
     await courseService.delete(req.params.courseId);
 
     res.redirect('/courses');
-})
+});
 
-async function isCourseOwner(req, res, next) {
-  const course = await courseService.getOne(req.params.courseId);
+router.get('/:courseId/edit', isCourseOwner, async (req, res) => {
 
-  if (course.owner != req.user?._id) {
-    return res.redirect(`/courses/${req.params.courseId}/details`);
+  res.render(`courses/edit`, { ...req.course });
+});
+
+router.post('/:courseId/edit',isCourseOwner, async (req, res) => {
+  const courseData = req.body;
+  const courseId = req.params.courseId;
+
+  try {
+    await courseService.edit(courseId, courseData);
+
+    res.redirect(`/courses/${courseId}/details`);
+  } catch (err) {
+    
+    res.render(`courses/edit`, {...courseData, error: getErrorMessage(err)});
   }
-
-  next();
-}
+});
 
 module.exports = router;

@@ -34,3 +34,5 @@ exports.singUp = async (courseId, userId) => {
 };
 
 exports.delete = (courseId) => Course.findByIdAndDelete(courseId);
+
+exports.edit = (courseId, courseData) => Course.findByIdAndUpdate(courseId, courseData,{ runValidators: true});
