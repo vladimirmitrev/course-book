@@ -18,6 +18,15 @@ exports.getOne = (courseId) => Course.findById(courseId);
 
 exports.getOneDetailed = (courseId) => this.getOne(courseId).populate('owner').populate('singUpList');
 
+exports.getLatest = () => {
+
+    const latestCourses = Course.find().sort({createdAt: -1}).limit(3);
+
+    // const latestCourses = Course.find().slice(-3);
+
+    return latestCourses;
+}
+
 exports.singUp = async (courseId, userId) => {
     //With 2 queries
     // await Course.findByIdAndUpdate(courseId, { push$: { singUpList: userId } });

@@ -38,8 +38,24 @@ const courseSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-    }
+    },
+  
+},
+{ 
+    timestamps: {
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+}
 });
+// if NO timestamps
+  // createdAt: {
+    //     type: Date
+    // }
+// courseSchema.pre('save', function() {
+//     if (!this.createdAt) {
+//         this.createdAt = Date.now();
+//     }
+// });
 const Course = mongoose.model('Course', courseSchema);
 
 module.exports = Course;
