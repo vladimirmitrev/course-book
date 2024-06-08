@@ -29,7 +29,7 @@ router.get('/:courseId/details', async (req, res) => {
     
 });
 
-router.get('/:courseId/sign-up', async (req, res) => {
+router.get('/:courseId/sign-up', isAuth, async (req, res) => {
   // const courseId = req.params.courseId;
   try {
     await courseService.singUp(req.params.courseId, req.user._id);

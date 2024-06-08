@@ -5,15 +5,18 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Username is required!'],
+        minLength: 2,
     },
     email: {
         type: String,
         required: [true, 'Email is required!'],
+        minLength: 10,
         // unique: true
     },
     password: {
         type: String,
         required: [true, 'Password is required!'],
+        minLength: 4,
     },
     createdCourses: [{
         type: mongoose.Types.ObjectId,
