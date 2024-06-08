@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Course',
     }],
+},
+{ 
+    timestamps: {
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+}
 });
 
 userSchema.pre('save', async function() {
