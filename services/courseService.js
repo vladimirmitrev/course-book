@@ -7,7 +7,7 @@ exports.create = async (userId, courseData) => {
         ...courseData,
     });
 
-    await User.findByIdAndUpdate(userId, { push$: { createdCourses: createdCourse._id } });
+    await User.findByIdAndUpdate(userId, { $push: { createdCourses: createdCourse._id } });
     
     return createdCourse;
 }
@@ -29,8 +29,8 @@ exports.getLatest = () => {
 
 exports.singUp = async (courseId, userId) => {
     //With 2 queries
-    // await Course.findByIdAndUpdate(courseId, { push$: { singUpList: userId } });
-    // await User.findByIdAndUpdate(userId, { push$: { singedUpCourses: courseId } });
+    // await Course.findByIdAndUpdate(courseId, { $push: { singUpList: userId } });
+    // await User.findByIdAndUpdate(userId, { $push: { singedUpCourses: courseId } });
 
     const course = await Course.findById(courseId);
     const user = await User.findById(userId);

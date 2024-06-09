@@ -39,14 +39,9 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
     },
-  
-},
-{ 
-    timestamps: {
-        createdAt: 'createdAt',
-        updatedAt: 'updatedAt'
-}
-});
+}, 
+{ timestamps: true}
+);
 // if NO timestamps
   // createdAt: {
     //     type: Date
